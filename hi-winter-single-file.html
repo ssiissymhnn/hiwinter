@@ -245,6 +245,32 @@ a{color:inherit;text-decoration:none}
 .ph svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ph.round{border-radius:50%}
 
+/* ---------- product photo / post photo ---------- */
+.ph.prod-ph{background:linear-gradient(160deg,#FBFCFD 0%,#E4EAF0 100%)}
+.hot-card .hc-cover{display:grid;place-items:center;height:104px}
+.pd-photos{display:flex;gap:8px;margin:2px 20px 18px;overflow-x:auto;scrollbar-width:none}
+.pd-photos::-webkit-scrollbar{display:none}
+.pd-ph{flex:none;width:168px;height:132px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.pd-photos.one .pd-ph{width:100%;height:230px}
+
+/* ---------- community title + market entry ---------- */
+.title-row{display:flex;align-items:center;gap:8px}
+.mk-go{
+  display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 8px 0 10px;border-radius:999px;
+  background:var(--pri);color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em;
+  box-shadow:0 3px 10px rgba(28,180,255,.34);transition:.15s;white-space:nowrap;
+}
+.mk-go:active{transform:scale(.94);background:var(--pri-dark)}
+
+/* ---------- MARKET surface (진입 시 배경 전환) ---------- */
+.app{transition:background-color .3s ease}
+.screen,.hdr,.tabbar{transition:background-color .3s ease}
+.app.mk{--bg:#DCE3EA;--line:#CBD4DD;--line-2:#DCE3E9;background:#DCE3EA}
+.app.mk .tabbar{background:rgba(255,255,255,.92)}
+.app.mk .chip{border-color:#CBD4DD}
+.app.mk .mk-cell .mk-h{background:rgba(255,255,255,.94)}
+.app.mk .sec-note{color:#77828E}
+
 /* list row */
 .row{display:flex;align-items:center;gap:12px;padding:15px 20px;background:#fff;width:100%;text-align:left;transition:background .14s}
 .row:active{background:#F7F9FA}
@@ -803,6 +829,8 @@ const PH_SETS = {
   slope:    [['#EAF3FA','#BCD6E8'], ['#E2EEF8','#A9CBE4']],
   lift:     [['#DCEAF6','#A6C6DF'], ['#E6F0F8','#B6D0E2']],
   room:     [['#F3EDE4','#D6C4AC'], ['#F1E9DE','#CBB89E']],
+  bunk:     [['#F2EDE6','#CFBDA6'], ['#EFEAE3','#C6B49C']],
+  kitchen:  [['#EFEFEA','#C8C6BC'], ['#F0ECE6','#C9BFB0']],
   deck:     [['#EDF1F5','#CBD6E0'], ['#F0EEF6','#D2CCE2']],
   goggle:   [['#E9EEF3','#C3CFDA'], ['#EDEBF4','#CBC5DC']],
   jacket:   [['#E8EFF5','#C2D3E0'], ['#F2ECEE','#DCC7CD']],
@@ -840,6 +868,26 @@ function phArt(kind, c2) {
       <rect x="16" y="18" width="40" height="30" rx="3" fill="${w}"/>
       <path d="M36 18v30M16 33h40" stroke="${c2}" stroke-width="1.6"/>
       <rect x="64" y="52" width="30" height="20" rx="4" fill="${w2}"/>`;
+    case 'bunk': return `
+      <rect x="0" y="74" width="100" height="26" fill="${c2}" opacity=".4"/>
+      <rect x="10" y="10" width="6" height="66" rx="2" fill="${c2}"/>
+      <rect x="84" y="10" width="6" height="66" rx="2" fill="${c2}"/>
+      <rect x="12" y="30" width="76" height="9" rx="3" fill="${w}"/>
+      <rect x="12" y="39" width="76" height="4" fill="${c2}" opacity=".5"/>
+      <rect x="12" y="62" width="76" height="9" rx="3" fill="${w}"/>
+      <rect x="12" y="71" width="76" height="4" fill="${c2}" opacity=".5"/>
+      <rect x="18" y="22" width="18" height="9" rx="4" fill="${w2}"/>
+      <rect x="18" y="54" width="18" height="9" rx="4" fill="${w2}"/>
+      <path d="M16 46h68" stroke="${c2}" stroke-width="2.4" opacity=".55"/>`;
+    case 'kitchen': return `
+      <rect x="0" y="56" width="100" height="44" fill="${c2}" opacity=".35"/>
+      <rect x="8" y="10" width="84" height="22" rx="3" fill="${w}"/>
+      <path d="M36 10v22M64 10v22" stroke="${c2}" stroke-width="1.6"/>
+      <rect x="6" y="54" width="88" height="8" rx="2" fill="${w}"/>
+      <rect x="10" y="62" width="80" height="34" rx="3" fill="${w2}"/>
+      <rect x="18" y="66" width="26" height="14" rx="3" fill="${c2}" opacity=".55"/>
+      <path d="M56 54v-10c0-4 4-6 8-6" stroke="${c2}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M52 84h30" stroke="${c2}" stroke-width="1.6" opacity=".5"/>`;
     case 'deck': return `
       <path d="M50 8c9 11 13 24 13 42s-4 31-13 42c-9-11-13-24-13-42S41 19 50 8Z" fill="${w}"/>
       <path d="M50 20v60" stroke="${c2}" stroke-width="2.6" stroke-linecap="round"/>
@@ -927,6 +975,114 @@ function riderSvg(sel = {}, h = 400) {
     <path d="M88 57c5-3 12-4 18-4" stroke="#fff" stroke-width="3" opacity=".55" fill="none" stroke-linecap="round"/>
     <path d="M100 88c4 3 16 3 20 0" stroke="#DFC3A8" stroke-width="2" fill="none"/>
   </svg>`;
+}
+
+
+/* ==========================================================================
+   PRODUCT PHOTO ART  —  마켓 상품 이미지 (스튜디오 촬영 스타일)
+   ========================================================================== */
+let _pdId = 0;
+function lum(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+}
+function prodArt(kind, c) {
+  const L = lum(c);
+  const k = L > .82 ? -62 : L > .62 ? -48 : -34;
+  const d = shade(c, k), d2 = shade(c, k - 26), l = shade(c, L > .8 ? 12 : 30);
+  const w = 'rgba(255,255,255,.92)', wf = 'rgba(255,255,255,.45)', sh = 'rgba(20,28,38,.13)';
+  switch (kind) {
+    case 'deck': return `
+      <ellipse cx="50" cy="93" rx="17" ry="3.4" fill="${sh}"/>
+      <path d="M50 5c8.2 0 14 3.6 14 8.2v7c0 5.2-3 10.4-3 29.8s3 24.6 3 29.8v7c0 4.6-5.8 8.2-14 8.2s-14-3.6-14-8.2v-7c0-5.2 3-10.4 3-29.8s-3-24.6-3-29.8v-7C36 8.6 41.8 5 50 5Z" fill="${c}"/>
+      <path d="M50 5c8.2 0 14 3.6 14 8.2v7c0 5.2-3 10.4-3 29.8s3 24.6 3 29.8v7c0 4.6-5.8 8.2-14 8.2Z" fill="${l}" opacity=".28"/>
+      <path d="M44 20h12l-2.4 60h-7.2Z" fill="${w}" opacity=".22"/>
+      <path d="M40 34c7-3 13-3 20 0" stroke="${w}" stroke-width="1.6" fill="none" opacity=".4"/>
+      <circle cx="50" cy="38" r="5.4" fill="${d}"/><circle cx="50" cy="38" r="2" fill="${d2}"/>
+      <circle cx="50" cy="63" r="5.4" fill="${d}"/><circle cx="50" cy="63" r="2" fill="${d2}"/>
+      <path d="M50 5c8.2 0 14 3.6 14 8.2v7c0 5.2-3 10.4-3 29.8s3 24.6 3 29.8v7c0 4.6-5.8 8.2-14 8.2s-14-3.6-14-8.2v-7c0-5.2 3-10.4 3-29.8s-3-24.6-3-29.8v-7C36 8.6 41.8 5 50 5Z" fill="none" stroke="${d2}" stroke-width="1.2" opacity=".5"/>`;
+    case 'goggle': return `
+      <ellipse cx="50" cy="84" rx="29" ry="3.6" fill="${sh}"/>
+      <rect x="1" y="41" width="98" height="9" rx="4.5" fill="#39414B"/>
+      <rect x="15" y="43" width="7" height="5" rx="1.6" fill="#6B7783"/>
+      <rect x="78" y="43" width="7" height="5" rx="1.6" fill="#6B7783"/>
+      <path d="M25 28h50c9.4 0 17 7.6 17 17v5c0 12.7-8.6 23-19.5 23-6.2 0-9.4-3.2-22.5-3.2S34.7 73 28.5 73C17.6 73 9 62.7 9 50v-5c0-9.4 7.6-17 17-17Z" fill="#2E353E" transform="translate(4)"/>
+      <path d="M25 28h50c9.4 0 17 7.6 17 17v5c0 12.7-8.6 23-19.5 23-6.2 0-9.4-3.2-22.5-3.2S34.7 73 28.5 73C17.6 73 9 62.7 9 50v-5c0-9.4 7.6-17 17-17Z" fill="#454E59"/>
+      <path d="M29 35h42c6.6 0 12 5.4 12 12v4c0 9.4-6.3 17-14.3 17-4.6 0-6.9-2.4-16.7-2.4S40.9 68 36.3 68C28.3 68 22 60.4 22 51v-4c0-6.6 5.4-12 12-12Z" fill="${c}"/>
+      <path d="M31 46c7-5 16-7 26-7" stroke="${w}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/>
+      <path d="M64 61c9-3 15-9 17-18" stroke="${w}" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".22"/>`;
+    case 'jacket': return `
+      <ellipse cx="50" cy="93" rx="26" ry="3.4" fill="${sh}"/>
+      <path d="M36 20 18 28l-6 26 11 4v32h54V58l11-4-6-26-18-8Z" fill="${c}"/>
+      <path d="M50 20v70" stroke="${d}" stroke-width="1.6" opacity=".5"/>
+      <path d="M36 20a14.5 14.5 0 0 0 28 0l-7-4H43Z" fill="${d}"/>
+      <rect x="27" y="62" width="16" height="11" rx="3.5" fill="${d}" opacity=".55"/>
+      <rect x="57" y="62" width="16" height="11" rx="3.5" fill="${d}" opacity=".55"/>
+      <rect x="12" y="56" width="12" height="7" rx="3" fill="${d}"/>
+      <rect x="76" y="56" width="12" height="7" rx="3" fill="${d}"/>
+      <path d="M23 82h54" stroke="${d}" stroke-width="5" opacity=".35"/>
+      <path d="M18 28l-6 26" stroke="${wf}" stroke-width="1.4" fill="none"/>`;
+    case 'pants': return `
+      <ellipse cx="50" cy="93" rx="24" ry="3.4" fill="${sh}"/>
+      <rect x="28" y="14" width="44" height="9" rx="3.5" fill="${d}"/>
+      <path d="M28 23h44l3 68H56l-6-42-6 42H25Z" fill="${c}"/>
+      <path d="M50 30v61" stroke="${d}" stroke-width="1.4" opacity=".45"/>
+      <rect x="30" y="44" width="13" height="15" rx="3.5" fill="${d}" opacity=".5"/>
+      <rect x="57" y="44" width="13" height="15" rx="3.5" fill="${d}" opacity=".5"/>
+      <path d="M30 70h16M54 70h16" stroke="${d}" stroke-width="1.4" opacity=".4"/>
+      <path d="M29 19h42" stroke="${l}" stroke-width="1.4" opacity=".5"/>`;
+    case 'boot': return `
+      <ellipse cx="52" cy="92" rx="28" ry="3.4" fill="${sh}"/>
+      <path d="M26 14h24v40c0 6 3.5 9.5 10 12l13 5c5 2 7 4.5 7 8.5V86H26Z" fill="${c}"/>
+      <path d="M31 19h14v36c0 4 1 6 3 8H31Z" fill="${l}" opacity=".45"/>
+      <path d="M26 74h54" stroke="${d}" stroke-width="1.6" opacity=".5"/>
+      <circle cx="61" cy="66" r="5" fill="${w}" opacity=".9"/><circle cx="61" cy="66" r="2" fill="${d2}"/>
+      <path d="M33 30h12M33 40h12M33 50h12" stroke="${d}" stroke-width="1.6" opacity=".55"/>
+      <rect x="22" y="84" width="60" height="9" rx="3.5" fill="${d2}"/>`;
+    case 'helmet': return `
+      <ellipse cx="50" cy="88" rx="26" ry="3.6" fill="${sh}"/>
+      <path d="M17 60a33 33 0 0 1 66 0v9a7 7 0 0 1-7 7H24a7 7 0 0 1-7-7Z" fill="${c}"/>
+      <path d="M17 60a33 33 0 0 1 33-33v49H17Z" fill="${l}" opacity=".25"/>
+      <rect x="34" y="38" width="10" height="4" rx="2" fill="${d2}" opacity=".8"/>
+      <rect x="47" y="35" width="10" height="4" rx="2" fill="${d2}" opacity=".8"/>
+      <rect x="60" y="38" width="10" height="4" rx="2" fill="${d2}" opacity=".8"/>
+      <path d="M17.5 58h65" stroke="${d}" stroke-width="4"/>
+      <path d="M22 66h13v10H22ZM65 66h13v10H65Z" fill="${d2}" opacity=".75"/>
+      <path d="M35 76c5 4 25 4 30 0" stroke="${d}" stroke-width="2" fill="none"/>`;
+    case 'glove': return `
+      <ellipse cx="50" cy="92" rx="22" ry="3.4" fill="${sh}"/>
+      <path d="M32 78V50c-7-2-11-7-11-13 0-5.5 4-9 9-9 3 0 5.5 1 7.5 3.5V24c0-5 4-9 9-9h12c8.5 0 15 6.5 15 15v25c0 13-5 23-11 23Z" fill="${c}"/>
+      <path d="M40 31.5V24c0-5 4-9 9-9h6v22Z" fill="${l}" opacity=".35"/>
+      <rect x="28" y="74" width="40" height="15" rx="6" fill="${d}"/>
+      <path d="M30 80h36" stroke="${l}" stroke-width="1.6" opacity=".5"/>
+      <path d="M52 22v42" stroke="${d}" stroke-width="1.4" opacity=".4"/>`;
+    default: return `
+      <ellipse cx="50" cy="90" rx="26" ry="3.6" fill="${sh}"/>
+      <path d="M32 12h36v52H32Z" fill="${c}"/>
+      <path d="M32 12h18v52H32Z" fill="${l}" opacity=".25"/>
+      <rect x="20" y="64" width="60" height="18" rx="7" fill="${d}"/>
+      <rect x="27" y="26" width="46" height="9" rx="4.5" fill="${d}"/>
+      <rect x="27" y="45" width="46" height="9" rx="4.5" fill="${d}"/>
+      <rect x="44" y="24" width="12" height="13" rx="3" fill="${w}" opacity=".85"/>
+      <rect x="44" y="43" width="12" height="13" rx="3" fill="${w}" opacity=".85"/>
+      <rect x="26" y="80" width="48" height="6" rx="3" fill="${d2}"/>`;
+  }
+}
+function prodPh(m, cls = '', style = '', fit = 'slice') {
+  const id = 'pdg' + (_pdId++);
+  const c = m.color || '#8A94A0';
+  return `<div class="ph prod-ph ${cls}" style="${style}">
+    <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid ${fit}">
+      <defs>
+        <linearGradient id="${id}" x1="0" y1="0" x2="0.3" y2="1">
+          <stop offset="0" stop-color="#FBFCFD"/><stop offset="1" stop-color="#E4EAF0"/></linearGradient>
+        <radialGradient id="${id}r" cx="0.32" cy="0.2" r="0.85">
+          <stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="100" height="100" fill="url(#${id})"/>
+      <rect width="100" height="100" fill="url(#${id}r)"/>
+      ${prodArt(m.art, c)}
+    </svg></div>`;
 }
 
 /* ==========================================================================
@@ -1025,7 +1181,7 @@ const POSTS = [
     d:'개장 일정 업데이트 되었어요!\n이번 시즌도 안전하고 즐겁게 타요 🏂',
     body:'주요 스키장 개장 예정일 정리했습니다. (11월 기준, 기상 상황에 따라 변동될 수 있어요)\n\n· 비발디파크 — 11월 29일\n· 곤지암 — 12월 2일\n· 용평 리조트 — 12월 4일\n· 알펜시아 — 12월 6일\n· 하이원 — 12월 11일\n· 휘닉스 평창 — 12월 19일\n\n초반에는 슬로프가 일부만 열리는 곳이 많으니 방문 전 공지 꼭 확인하세요.\n시즌권 얼리버드는 대부분 11월 중순에 마감됩니다!' },
   { id:'t4', cat:'market', t:'[판매] 23-24 버튼 데크 155cm 팝니다', w:'덕스탠스', lv:'6년차 · 파크',
-    resort:'홍대입구', time:'2시간 전', likes:7, cmts:2, art:'deck', seed:4, hot:false,
+    resort:'홍대입구', time:'2시간 전', likes:7, cmts:2, art:'deck', seed:4, hot:false, pid:'m1',
     d:'사용감 적고 상태 좋습니다.\n직거래 (홍대입구) 선호해요!',
     body:'23-24 시즌 두 달 정도 탄 데크입니다.\n엣지 상태 좋고 베이스 큰 손상 없습니다.\n\n· 사이즈 155cm / 캠버\n· 사용 기간: 2개월 (약 12회)\n· 정가 620,000원 → 320,000원\n\n직거래는 홍대입구역 선호하고, 택배도 가능합니다 (착불).' },
   { id:'t5', cat:'house', t:'휘닉스 평창 시즌방 여성 1명 구해요!', w:'평창러버', lv:'4년차 · 카빙',
@@ -1080,34 +1236,34 @@ const COMMENTS = {
 
 const PRODUCTS = [
   { id:'m1', n:'23-24 버튼 커스텀 데크 155cm', p:320000, cat:'gear', cond:'상태 좋음', area:'서울 마포구',
-    seller:'덕스탠스', sellerLv:'거래 12회 · 매너 4.9', art:'deck', seed:1, time:'2시간 전',
+    seller:'덕스탠스', sellerLv:'거래 12회 · 매너 4.9', color:'#2F3A52', art:'deck', seed:1, time:'2시간 전',
     d:'23-24 시즌 두 달 정도 탄 데크입니다.\n엣지 상태 좋고 베이스 큰 손상 없습니다.\n직거래는 홍대입구역 선호하고, 택배도 가능합니다.' },
   { id:'m2', n:'오클리 플라이트 데크 고글 (실버)', p:145000, cat:'acc', cond:'거의 새것', area:'경기 성남시',
-    seller:'고글수집가', sellerLv:'거래 31회 · 매너 5.0', art:'goggle', seed:2, time:'5시간 전',
+    seller:'고글수집가', sellerLv:'거래 31회 · 매너 5.0', color:'#B8C3CD', art:'goggle', seed:2, time:'5시간 전',
     d:'두 번 착용했습니다. 렌즈 기스 없고 케이스, 여분 렌즈 모두 있습니다.' },
   { id:'m3', n:'686 GORE-TEX 자켓 M (화이트)', p:210000, cat:'wear', cond:'상태 좋음', area:'서울 강남구',
-    seller:'화이트룩', sellerLv:'거래 8회 · 매너 4.8', art:'jacket', seed:3, time:'7시간 전',
+    seller:'화이트룩', sellerLv:'거래 8회 · 매너 4.8', color:'#E9EDF2', art:'jacket', seed:3, time:'7시간 전',
     d:'지난 시즌 5회 착용했습니다. 오염 없고 방수 성능 그대로입니다.' },
   { id:'m4', n:'버튼 카고 팬츠 L (블랙)', p:135000, cat:'wear', cond:'보통', area:'강원 평창군',
-    seller:'평창러버', sellerLv:'거래 5회 · 매너 4.7', art:'pants', seed:4, time:'11시간 전',
+    seller:'평창러버', sellerLv:'거래 5회 · 매너 4.7', color:'#23272C', art:'pants', seed:4, time:'11시간 전',
     d:'두 시즌 착용했습니다. 밑단 약간의 사용감 있지만 방수 이상 없습니다.' },
   { id:'m5', n:'살로몬 부츠 275mm', p:180000, cat:'gear', cond:'상태 좋음', area:'서울 송파구',
-    seller:'카빙장인', sellerLv:'거래 22회 · 매너 4.9', art:'boot', seed:5, time:'1일 전',
+    seller:'카빙장인', sellerLv:'거래 22회 · 매너 4.9', color:'#2B3138', art:'boot', seed:5, time:'1일 전',
     d:'한 시즌 사용했습니다. 이너 상태 깨끗하고 다이얼 정상 작동합니다.' },
   { id:'m6', n:'스미스 바이털 헬멧 M (매트 블랙)', p:98000, cat:'acc', cond:'거의 새것', area:'경기 용인시',
-    seller:'그라운드킴', sellerLv:'거래 14회 · 매너 5.0', art:'helmet', seed:6, time:'1일 전',
+    seller:'그라운드킴', sellerLv:'거래 14회 · 매너 5.0', color:'#22262B', art:'helmet', seed:6, time:'1일 전',
     d:'세 번 착용했습니다. 충격 이력 없고 박스 포함입니다.' },
   { id:'m7', n:'유니온 스트라타 바인딩 M', p:175000, cat:'gear', cond:'상태 좋음', area:'서울 성동구',
-    seller:'덕스탠스', sellerLv:'거래 12회 · 매너 4.9', art:'gear', seed:7, time:'2일 전', sold:true,
+    seller:'덕스탠스', sellerLv:'거래 12회 · 매너 4.9', color:'#39414B', art:'gear', seed:7, time:'2일 전', sold:true,
     d:'한 시즌 사용했습니다. 스트랩, 래칫 모두 정상입니다.' },
   { id:'m8', n:'볼컴 아노락 자켓 L (네이비)', p:165000, cat:'wear', cond:'상태 좋음', area:'인천 연수구',
-    seller:'파우더러', sellerLv:'거래 19회 · 매너 4.8', art:'jacket', seed:8, time:'2일 전',
+    seller:'파우더러', sellerLv:'거래 19회 · 매너 4.8', color:'#2A3A56', art:'jacket', seed:8, time:'2일 전',
     d:'작년에 구매해서 6회 착용했습니다. 사이즈가 커서 판매합니다.' },
   { id:'m9', n:'헤스트라 레더 글러브 9', p:88000, cat:'acc', cond:'상태 좋음', area:'서울 마포구',
-    seller:'스노우노트', sellerLv:'거래 27회 · 매너 5.0', art:'glove', seed:9, time:'3일 전',
+    seller:'스노우노트', sellerLv:'거래 27회 · 매너 5.0', color:'#8A6244', art:'glove', seed:9, time:'3일 전',
     d:'왁싱 관리 꾸준히 했습니다. 가죽 상태 좋습니다.' },
   { id:'m10', n:'나이트로 데크 152cm (입문용)', p:145000, cat:'gear', cond:'보통', area:'강원 홍천군',
-    seller:'평일러', sellerLv:'거래 6회 · 매너 4.6', art:'deck', seed:10, time:'3일 전',
+    seller:'평일러', sellerLv:'거래 6회 · 매너 4.6', color:'#6FA8DC', art:'deck', seed:10, time:'3일 전',
     d:'입문용으로 좋습니다. 베이스 생활기스 있지만 라이딩에 지장 없습니다.' }
 ];
 const MK_CATS = [{ k:'all', ko:'전체' }, { k:'gear', ko:'장비' }, { k:'wear', ko:'웨어' }, { k:'acc', ko:'액세서리' }];
@@ -1239,6 +1395,7 @@ const TABS = [
 ];
 const TAB_ROUTES = TABS.map(t => t.r);
 const NO_TAB = ['product'];
+const MK_ROUTES = ['market', 'product', 'sell'];
 const V = {};          /* route -> fn(params) => html string */
 let MOUNT = [];
 const onMount = fn => MOUNT.push(fn);
@@ -1268,6 +1425,8 @@ function paint(anim) {
   stack.innerHTML = `<section class="screen ${anim ? 'anim-' + anim : ''}">${html}</section>`;
   const sc = $('.screen .scroll');
   if (sc && e.s) sc.scrollTop = e.s;
+  const app = $('#app');
+  if (app) app.classList.toggle('mk', MK_ROUTES.indexOf(e.r) >= 0);
   const tb = $('#tabbar');
   const hide = NO_TAB.indexOf(e.r) >= 0;
   tb.classList.toggle('hide', hide);
@@ -1319,10 +1478,33 @@ function baseCard(r, i) {
       <span class="bc-sub">${esc(r.open)} 오픈 예정<br>${esc(r.wx)} · ${r.temp}°</span></span>
   </button>`;
 }
+const PHOTO_CATS = ['house', 'market'];
+const hasPhoto = p => PHOTO_CATS.indexOf(p.cat) >= 0;
+const CAT_TINT = {
+  mate:['#F2EFFF', '#6C56D8'], info:['#E8F8F1', '#0E9E72'], qna:['#FFF6E9', '#C77700'],
+  outfit:['#F2EFFF', '#6C56D8'], gear:['#EDF1F6', '#4B5563'], house:['#E7F6FF', '#0E96DB'],
+  market:['#FFF0F1', '#E8474D'], all:['#E7F6FF', '#0E96DB']
+};
+function postPhotos(p) {
+  if (!hasPhoto(p)) return '';
+  const imgs = (p.cat === 'market' && prodOf(p.pid))
+    ? [prodPh(prodOf(p.pid), '', 'width:100%;height:100%', 'meet')]
+    : [ph('room', p.seed, '', 'width:100%;height:100%'),
+       ph('bunk', p.seed + 1, '', 'width:100%;height:100%'),
+       ph('kitchen', p.seed + 2, '', 'width:100%;height:100%'),
+       ph('mountain', p.seed + 3, '', 'width:100%;height:100%')];
+  return `<div class="pd-photos ${imgs.length === 1 ? 'one' : ''}">
+    ${imgs.map(im => `<div class="pd-ph">${im}</div>`).join('')}</div>`;
+}
 function hotCard(p) {
   const c = CAT(p.cat);
+  const t = CAT_TINT[p.cat] || CAT_TINT.all;
+  const cover = hasPhoto(p)
+    ? ph(p.art, p.seed)
+    : `<span class="hc-cover" style="background:linear-gradient(150deg,${t[0]} 0%,#fff 130%);color:${t[1]}">
+         ${ic(c.icon, 34, 1.5)}</span>`;
   return `<button class="hot-card" data-go="post:${p.id}">
-    ${ph(p.art, p.seed)}
+    ${cover}
     <span class="hc-b"><span class="tag ${CAT_TAG[p.cat] || ''}">${esc(c.ko)}</span>
       <span class="hc-t">${esc(p.t)}</span>${countsHtml(p)}</span></button>`;
 }
@@ -1340,7 +1522,7 @@ function mateCard(p) {
     </span></button>`;
 }
 function prodCard(m) {
-  return `<button class="prod-card" data-go="product:${m.id}">${ph(m.art, m.seed)}
+  return `<button class="prod-card" data-go="product:${m.id}">${prodPh(m)}
     <span class="pc-n">${esc(m.n)}</span><span class="pc-p">${won(m.p)}</span>
     <span class="pc-m">${esc(m.area)} · ${esc(m.cond)}</span></button>`;
 }
@@ -1840,7 +2022,7 @@ function postCard(p) {
     <span class="p-body"><span class="p-main">
         <span class="p-t">${esc(p.t)}</span>
         <span class="p-d">${esc(p.d || p.body || '')}</span>
-      </span>${ph(p.art, p.seed)}</span>
+      </span>${hasPhoto(p) ? (p.cat === 'market' && prodOf(p.pid) ? prodPh(prodOf(p.pid)) : ph(p.art, p.seed)) : ''}</span>
     <span class="p-foot">
       <span class="meta">${esc(p.time)}<i class="dotsep"></i>${esc(p.resort)}</span>
       ${countsHtml(p)}</span>
@@ -1851,7 +2033,13 @@ V.community = () => {
   if (cmResort !== 'all') base0 = base0.filter(p => p.resort === cmResort);
   const list = sortPosts(base0);
   return `
-  ${bigHdr('COMMUNITY', '함께라서 더 즐거운 겨울 ❄️', HDR_ACTS)}
+  <header class="hdr"><div class="hdr-row"><div>
+    <div class="title-row">
+      <h1 style="font-size:24px">COMMUNITY</h1>
+      <button class="mk-go" data-act="goMarket">${ic('cart', 14, 2.1)}MARKET${ic('right', 12, 2.6)}</button>
+    </div>
+    <p class="sub">함께라서 더 즐거운 겨울 ❄️</p>
+  </div><div class="hdr-acts">${HDR_ACTS}</div></div></header>
   <div class="scroll" style="padding-bottom:0">
     <div class="cat-circles">
       ${CATS.map(c => `<button class="cc ${c.k === cmCat && c.k !== 'market' ? 'on' : ''}"
@@ -1897,6 +2085,7 @@ V.post = ({ id }) => {
         <div style="margin-left:auto" class="meta">${esc(p.time)}<i class="dotsep"></i>${ic('pin', 12, 2)}${esc(p.resort)}</div>
       </div>
     </div>
+    ${postPhotos(p)}
     ${p.form ? `<dl class="pd-info">${Object.keys(p.form).map(k =>
         `<dt>${esc(k)}</dt><dd>${esc(p.form[k])}</dd>`).join('')}</dl>` : ''}
     <div class="pd-body">${esc(p.body || p.d || '')}</div>
@@ -1996,7 +2185,7 @@ function mkCell(m) {
   const on = !!S.wish[m.id];
   return `<div class="mk-cell">
     <button style="display:block;width:100%;text-align:left" data-go="product:${m.id}">
-      ${ph(m.art, m.seed)}
+      ${prodPh(m)}
       ${m.sold ? '<span class="sold tag dark">거래완료</span>' : ''}
       <span class="mk-n">${esc(m.n)}</span>
       <span class="mk-p">${won(m.p)}</span>
@@ -2029,7 +2218,7 @@ V.product = ({ id }) => {
   const cat = { gear:'장비', wear:'웨어', acc:'액세서리' }[m.cat] || '기타';
   return `
   <div class="scroll" style="padding-bottom:0;background:#fff">
-    <div class="pdt-hero">${ph(m.art, m.seed)}
+    <div class="pdt-hero">${prodPh(m, 'hero', '', 'meet')}
       <div class="pdt-nav">
         <button class="rb" data-back>${ic('left', 21)}</button>
         <button class="rb" data-act="share">${ic('share', 19)}</button>
@@ -2512,6 +2701,7 @@ function act(code, el) {
       const m = { id: uid('m'), n, p: parseInt(p0, 10) || 0, cat: FORM.mkcat, cond: FORM.cond, area,
         seller: S.profile.name, sellerLv: '거래 0회 · 신규 판매자', time: '방금 전',
         art: { gear:'deck', wear:'jacket', acc:'goggle' }[FORM.mkcat] || 'gear',
+        color: ['#2F3A52','#3E5A78','#6FA8DC','#8A6244','#2B3138'][Math.floor(Math.random() * 5)],
         seed: Math.floor(Math.random() * 9), d: d || '상품 설명이 없습니다.', mine: true };
       S.myProducts.unshift(m); save(); FORM = {};
       HIST.pop(); paint('pop'); toast('상품이 등록되었습니다', 'check');

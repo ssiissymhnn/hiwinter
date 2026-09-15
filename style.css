@@ -236,6 +236,32 @@ a{color:inherit;text-decoration:none}
 .ph svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .ph.round{border-radius:50%}
 
+/* ---------- product photo / post photo ---------- */
+.ph.prod-ph{background:linear-gradient(160deg,#FBFCFD 0%,#E4EAF0 100%)}
+.hot-card .hc-cover{display:grid;place-items:center;height:104px}
+.pd-photos{display:flex;gap:8px;margin:2px 20px 18px;overflow-x:auto;scrollbar-width:none}
+.pd-photos::-webkit-scrollbar{display:none}
+.pd-ph{flex:none;width:168px;height:132px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.pd-photos.one .pd-ph{width:100%;height:230px}
+
+/* ---------- community title + market entry ---------- */
+.title-row{display:flex;align-items:center;gap:8px}
+.mk-go{
+  display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 8px 0 10px;border-radius:999px;
+  background:var(--pri);color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em;
+  box-shadow:0 3px 10px rgba(28,180,255,.34);transition:.15s;white-space:nowrap;
+}
+.mk-go:active{transform:scale(.94);background:var(--pri-dark)}
+
+/* ---------- MARKET surface (진입 시 배경 전환) ---------- */
+.app{transition:background-color .3s ease}
+.screen,.hdr,.tabbar{transition:background-color .3s ease}
+.app.mk{--bg:#DCE3EA;--line:#CBD4DD;--line-2:#DCE3E9;background:#DCE3EA}
+.app.mk .tabbar{background:rgba(255,255,255,.92)}
+.app.mk .chip{border-color:#CBD4DD}
+.app.mk .mk-cell .mk-h{background:rgba(255,255,255,.94)}
+.app.mk .sec-note{color:#77828E}
+
 /* list row */
 .row{display:flex;align-items:center;gap:12px;padding:15px 20px;background:#fff;width:100%;text-align:left;transition:background .14s}
 .row:active{background:#F7F9FA}
